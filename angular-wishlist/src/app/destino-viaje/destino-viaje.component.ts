@@ -2,11 +2,12 @@ import { Component, OnInit, Input, HostBinding, EventEmitter, Output, input} fro
 import { DestinoViaje } from '../models/destino-viaje.model';
 import { ThisReceiver } from '@angular/compiler';
 import { CommonModule, NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-destino-viaje',
   standalone: true,
-  imports: [NgFor, NgSwitch, NgSwitchCase, CommonModule, NgIf],
+  imports: [NgFor, NgSwitch, NgSwitchCase, CommonModule, NgIf, RouterLink],
   templateUrl: './destino-viaje.component.html',
   styleUrl: './destino-viaje.component.css'
 })
