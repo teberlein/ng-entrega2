@@ -31,7 +31,7 @@ export class ListaDestinosComponent implements OnInit{
   }
 
   elegido(e: DestinoViaje) {
-    this.destinosApiClient.getAll().forEach(x => e.selected===false);
+    this.destinosApiClient.getAll().forEach(x => x.selected = false);
     e.selected = true;
   }
 }
