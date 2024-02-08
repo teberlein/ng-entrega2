@@ -4,6 +4,8 @@ import { DestinoViajeComponent } from './destino-viaje/destino-viaje.component';
 import { ListaDestinosComponent } from './lista-destinos/lista-destinos.component';
 import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DestinoViaje } from './models/destino-viaje.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,4 +16,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class AppComponent {
   title = 'angular-wishlist';
+  time = new Observable(observer => {
+    setInterval(() => observer.next(new Date().toString()), 1000)
+  })
+
+  destinoAgregado(d: DestinoViaje) {
+    //alert(d.nombre);
+  }
 }

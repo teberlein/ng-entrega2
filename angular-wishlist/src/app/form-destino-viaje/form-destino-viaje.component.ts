@@ -1,12 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { DestinoViaje } from '../models/destino-viaje.model';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { fromEvent } from 'rxjs';
+import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { AjaxResponse, ajax } from 'rxjs/ajax';
 
 @Component({
   selector: 'app-form-destino-viaje',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './form-destino-viaje.component.html',
   styleUrl: './form-destino-viaje.component.css'
 })
@@ -14,8 +17,10 @@ export class FormDestinoViajeComponent implements OnInit{
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
   public fg! : FormGroup
   minLongitud = 5;
+  searchResults: any[];
 
-  constructor(fb: FormBuilder) {  
+  constructor(fb: FormBuilder) {
+    this.searchResults = [];
     this.onItemAdded = new EventEmitter();
 
     this.fg = new FormGroup({
@@ -32,7 +37,19 @@ export class FormDestinoViajeComponent implements OnInit{
     })
   }
 
-  ngOnInit() {   
+  ngOnInit() {
+    let elemNombre = <HTMLInputElement>document.getElementById('nombre');
+    fromEvent(elemNombre, 'input')
+    .pipe(
+      map((e: Event) => (e.target as HTMLInputElement).value),
+      filter(text => text.length > 3),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(() => ajax('/assets/datos.json'))
+    ).subscribe(AjaxResponse => {
+      console.log(AjaxResponse.response);
+      this.searchResults = AjaxResponse.response as string[];
+    })
   }
 
   guardar(nombre:string, url:string):boolean {
