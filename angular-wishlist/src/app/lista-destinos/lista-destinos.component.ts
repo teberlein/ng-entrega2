@@ -31,7 +31,7 @@ export class ListaDestinosComponent implements OnInit{
     store.select(state => state.destinos.favorito)
       .subscribe(d => {
         if (d != null) {
-          this.updates.push('Se ha  elegido a ' + d.nombre)
+          this.updates.push('Se ha  elegido a ' + d.nombre + ' selected es: ' + d.selected);
         }
       })
   }
@@ -42,7 +42,6 @@ export class ListaDestinosComponent implements OnInit{
 
   agregado(d: DestinoViaje) {
     this.store.dispatch(NuevoDestinoAction({destino: { ...d }}));
-    console.log(d.selected);
     this.destinosApiClient.add(d);
     this.onItemAdded.emit(d);
     console.log('se ha agregado el destino ' + d.nombre);
