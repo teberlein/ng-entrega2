@@ -23,7 +23,7 @@ export const initialState: DestinosViajesState = {
     on(DestinosViajesActions.NuevoDestinoAction, (state, { destino }) => ({...state, items: [...state.items, destino]})),
     on(DestinosViajesActions.ElegidoFavoritoAction, (state, { destino }) => {
         // Crea una copia del array de items con selected = false
-        const updatedItems = state.items.map(dest => {
+/*         const updatedItems = state.items.map(dest => {
             if(dest.nombre === destino.nombre && dest.selected === destino.selected && dest.url === destino.url){
                 console.log('selected es true');
                 return ({...dest, selected: true});
@@ -32,11 +32,22 @@ export const initialState: DestinosViajesState = {
                 console.log('selected es false')
                 return ({...dest, selected: false});
             }
-        })
+        }) */
 
         // Retorna un nuevo estado con las modificaciones
-        return { ...state, items: updatedItems, favorito: destino };
-    })
+        return { ...state, favorito: destino };
+/*         return { ...state, items: updatedItems, favorito: destino };
+ */
+    }),
+    on(DestinosViajesActions.VoteUpAction, (state, { destino }) => {
+
+        destino.voteUp
+        return({ ...state })
+    }),
     
+    on(DestinosViajesActions.VoteDownAction, (state, { destino }) => {
+        destino.voteDown
+        return({ ...state })
+    }),
 /*     on(DestinosViajesActions.ElegidoFavoritoAction, (state, { destino }) => ({...state, favorito: destino})), */
 )

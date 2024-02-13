@@ -17,5 +17,10 @@
         <a href="#" class="btn-card" (click)="ir()">Ir!</a>
         <span *ngIf="destino.selected" ngNonBindable>{{PREFERIDO}}</span>
         <a [routerLink]="['/destino']">Ver detalle</a>
+        <div>
+            <a href="#" (click)="voteUp()" class="material-icons md-18">thumb_up</a>
+            <a href="#" (click)="voteDown()" class="material-icons md-18">thumb_down</a>
+            <span>{{destino.votes}}</span>
+        </div>
     </div>
 </div>

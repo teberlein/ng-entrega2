@@ -41,7 +41,13 @@ export class ListaDestinosComponent implements OnInit{
   }
 
   agregado(d: DestinoViaje) {
-    this.store.dispatch(NuevoDestinoAction({destino: { ...d }}));
+    this.store.dispatch(NuevoDestinoAction({destino: {
+      ...d,
+      voteUp: function () {
+      },
+      voteDown: function () {
+      }
+    }}));
     this.destinosApiClient.add(d);
     this.onItemAdded.emit(d);
     console.log('se ha agregado el destino ' + d.nombre);
@@ -49,7 +55,13 @@ export class ListaDestinosComponent implements OnInit{
 
   elegido(e: DestinoViaje) {
      this.destinosApiClient.elegir(e);
-     this.store.dispatch(ElegidoFavoritoAction({destino: {...e}}));
+     this.store.dispatch(ElegidoFavoritoAction({destino: {
+       ...e,
+       voteUp: function () {
+      },
+      voteDown: function () {
+      }
+     }}));
      console.log('se ha elegido el destino ' + e.nombre);
     }
 }

@@ -4,7 +4,9 @@ import { DestinoViaje } from "../../models/destino-viaje.model";
  // ACCIONES
  export enum DestinosViajesActionTypes {
     NUEVO_DESTINO = '[Destinos Viajes] Nuevo',
-    ELEGIDO_FAVORITO = '[Destinos Viajes] Favorito'
+    ELEGIDO_FAVORITO = '[Destinos Viajes] Favorito',
+    VOTE_UP = '[Destinos Viajes] Up',
+    VOTE_DOWN = '[Destinos Viajes] Down'
 }
 
 export const NuevoDestinoAction = createAction(
@@ -14,5 +16,15 @@ export const NuevoDestinoAction = createAction(
 
 export const ElegidoFavoritoAction = createAction(
     DestinosViajesActionTypes.ELEGIDO_FAVORITO,
+    props<{ destino: DestinoViaje; }>()
+)
+
+export const VoteUpAction = createAction(
+    DestinosViajesActionTypes.VOTE_UP,
+    props<{ destino: DestinoViaje; }>()
+)
+
+export const VoteDownAction = createAction(
+    DestinosViajesActionTypes.VOTE_DOWN,
     props<{ destino: DestinoViaje; }>()
 )
