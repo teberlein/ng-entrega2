@@ -22,18 +22,18 @@ import { selectFavorito, selectItems } from '../states/destinos-viajes/destinos-
 export class ListaDestinosComponent implements OnInit{
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
   updates: string[];
-
-  destinos: DestinoViaje[];
+  all: DestinoViaje[];
   constructor( private destinosApiClient:DestinosApiClient, private store: Store<AppState>) {
-    this.destinos = this.destinosApiClient.getAll(),
     this.onItemAdded = new EventEmitter;
     this.updates = [];
+    this.all = [];
     store.select(state => state.destinos.favorito)
       .subscribe(d => {
         if (d != null) {
           this.updates.push('Se ha  elegido a ' + d.nombre + ' selected es: ' + d.selected);
         }
       })
+      store.select(state => state.destinos.items).subscribe(items => this.all = items);
   }
 
   ngOnInit(): void {
@@ -41,13 +41,6 @@ export class ListaDestinosComponent implements OnInit{
   }
 
   agregado(d: DestinoViaje) {
-    this.store.dispatch(NuevoDestinoAction({destino: {
-      ...d,
-      voteUp: function () {
-      },
-      voteDown: function () {
-      }
-    }}));
     this.destinosApiClient.add(d);
     this.onItemAdded.emit(d);
     console.log('se ha agregado el destino ' + d.nombre);
@@ -55,13 +48,6 @@ export class ListaDestinosComponent implements OnInit{
 
   elegido(e: DestinoViaje) {
      this.destinosApiClient.elegir(e);
-     this.store.dispatch(ElegidoFavoritoAction({destino: {
-       ...e,
-       voteUp: function () {
-      },
-      voteDown: function () {
-      }
-     }}));
      console.log('se ha elegido el destino ' + e.nombre);
     }
 }
