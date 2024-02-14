@@ -6,7 +6,9 @@ import { DestinoViaje } from "../../models/destino-viaje.model";
     NUEVO_DESTINO = '[Destinos Viajes] Nuevo',
     ELEGIDO_FAVORITO = '[Destinos Viajes] Favorito',
     VOTE_UP = '[Destinos Viajes] Up',
-    VOTE_DOWN = '[Destinos Viajes] Down'
+    VOTE_DOWN = '[Destinos Viajes] Down',
+    VOTE_RESET = '[Destinos Viajes] Reset'
+
 }
 
 export const NuevoDestinoAction = createAction(
@@ -26,5 +28,10 @@ export const VoteUpAction = createAction(
 
 export const VoteDownAction = createAction(
     DestinosViajesActionTypes.VOTE_DOWN,
+    props<{ destino: DestinoViaje; }>()
+)
+
+export const VoteResetAction = createAction(
+    DestinosViajesActionTypes.VOTE_RESET,
     props<{ destino: DestinoViaje; }>()
 )

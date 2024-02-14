@@ -5,7 +5,7 @@ import { CommonModule, NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/comm
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../states/app.state';
-import { VoteDownAction, VoteUpAction } from '../states/destinos-viajes/destinos-viajes.actions';
+import { VoteDownAction, VoteResetAction, VoteUpAction } from '../states/destinos-viajes/destinos-viajes.actions';
 
 @Component({
   selector: 'app-destino-viaje',
@@ -36,24 +36,51 @@ export class DestinoViajeComponent implements OnInit{
   voteUp() {
     this.store.dispatch(VoteUpAction({destino: {
       ...this.destino,
-      voteUp: function () {
+      setSelected: function (value: boolean): void {
       },
-      voteDown: function () {
+      voteUp: function (): void {
+      },
+      voteDown: function (): void {
+      },
+      voteReset: function (): void {
       }
     }}))
-    this.destino.votes++;    
+    console.log(this.destino.votes);
+    this.destino.votes ++;
     return false;
   }
 
   voteDown() {
     this.store.dispatch(VoteDownAction({destino: {
       ...this.destino,
+      setSelected: function (value: boolean): void {
+      },
+      voteUp: function (): void {
+      },
+      voteDown: function (): void {
+      },
+      voteReset: function (): void {
+      }
+    }}))
+    this.destino.votes --;
+    console.log(this.destino.votes);
+    return false;
+  }
+
+  voteReset() {
+    this.store.dispatch(VoteResetAction({destino: {
+      ...this.destino,
       voteUp: function () {
       },
       voteDown: function () {
+      },
+      voteReset: function () {
+      },
+      setSelected: function (value: boolean): void {
       }
     }}))
-    this.destino.votes--;    
+    console.log(this.destino.votes);
+    this.destino.votes = 0;
     return false;
   }
   

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observer, Subject } from 'rxjs';
 import { DestinoViaje } from './destino-viaje.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../states/app.state';
@@ -7,24 +7,24 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DestinosApiClient {
- 	constructor(private store: Store<AppState>) {
+	destinos: DestinoViaje[];
+	current: Subject<DestinoViaje | null> = new BehaviorSubject<DestinoViaje | null>(null);
+	constructor(private store: Store<AppState>) {
+		this.destinos = []
 	}
 	add(d:DestinoViaje){
-		this.store.dispatch(NuevoDestinoAction({destino: {
-			...d,
-			voteUp: function (): void {
-			},
-			voteDown: function (): void {
-			}
-		}}))
+		this.destinos.push(d);
 	}
-	elegir(d: DestinoViaje) {
-		this.store.dispatch(ElegidoFavoritoAction({ destino: {
-			...d,
-			voteUp: function (): void {
-			},
-			voteDown: function (): void {
-			}
-		}}))
+	getAll(): DestinoViaje[]{
+		return this.destinos;
 	}
+	elegir(d:DestinoViaje) {
+		this.destinos.forEach(x => x.setSelected(false));
+		d.setSelected(true);
+		this.current.next(d);
+	}
+	subscribeOnChange(fn: any) {
+		this.current.subscribe(fn);
+	}
+
 }
