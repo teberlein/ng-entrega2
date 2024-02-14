@@ -30,7 +30,7 @@ export class ListaDestinosComponent implements OnInit{
     store.select(state => state.destinos.favorito)
       .subscribe(d => {
         if (d != null) {
-          this.updates.push('Se ha  elegido a ' + d.nombre + ' selected es: ' + d.selected);
+          this.updates.push('Se ha  elegido a ' + d.nombre);
         }
       })
   }
